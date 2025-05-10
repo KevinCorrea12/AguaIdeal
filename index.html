@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Temperatura Ideal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #e0f7fa, #ffffff);
+            text-align: center;
+            padding: 40px;
+        }
+
+        .chuveiro-img {
+            width: 300px;
+            height: auto;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        h1 {
+            color: #005a9c;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        input[type="number"] {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px 0;
+            width: 200px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #005a9c;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #003d66;
+        }
+
+        #resultado {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .container {
+            background-color: #ffffffd0;
+            border-radius: 10px;
+            padding: 30px;
+            display: inline-block;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #estadoChuveiro {
+            margin-top: 10px;
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Imagem do chuveiro -->
+    <img id="chuveiroImg" src="https://imgs.search.brave.com/r4WAGgoFXVRWFxPePoLC9kH1McLxQVLtPfdX17OPtZ0/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzc3Lzc5/LzkxLzc3Nzk5MTVk/MWUwNjk5YmZkMTE4/NzFhMjk0YmM0NmIx/LmpwZw" alt="Chuveiro Desligado" class="chuveiro-img">
+
+    <div class="container">
+        <h1>Temperatura Ideal da Água</h1>
+
+        <p>Digite a temperatura da água (°C):</p>
+        <input type="number" id="temperatura" step="0.1" placeholder="Ex: 35.5">
+        <br>
+        <button onclick="verificarTemperatura()">Verificar Temperatura</button>
+        <br><br>
+        <button onclick="toggleChuveiro()">Ligar/Desligar Chuveiro</button>
+
+        <div id="estadoChuveiro">Chuveiro Desligado</div>
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        let chuveiroLigado = false;
+
+        function toggleChuveiro() {
+            const img = document.getElementById("chuveiroImg");
+            const estado = document.getElementById("estadoChuveiro");
+
+            chuveiroLigado = !chuveiroLigado;
+
+            if (chuveiroLigado) {
+                img.src = "https://imgs.search.brave.com/KRUV75aiKA9-wSVHg6greef_ONeELKjn63XF6ViIccA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMuaGlzdG9yaWFk/b211bmRvLmNvbS5i/ci9jb250ZXVkby9p/bWFnZXMvby1iYW5o/by10ZW0tdW1hLWhp/c3RvcmljaWRhZGUt/ZGlzdGludGEtcGFy/YS1jYWRhLWNpdmls/aXphY2FvLXBsYW5l/dGEtNWNhZmExYjI1/YmE0MC5qcGc";
+                img.alt = "Chuveiro Ligado";
+                estado.textContent = "Chuveiro Ligado";
+                estado.style.color = "blue";
+            } else {
+                img.src = "https://imgs.search.brave.com/r4WAGgoFXVRWFxPePoLC9kH1McLxQVLtPfdX17OPtZ0/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzc3Lzc5/LzkxLzc3Nzk5MTVk/MWUwNjk5YmZkMTE4/NzFhMjk0YmM0NmIx/LmpwZw";
+                img.alt = "Chuveiro Desligado";
+                estado.textContent = "Chuveiro Desligado";
+                estado.style.color = "green";
+                document.getElementById("resultado").textContent = "";
+            }
+        }
+
+        function verificarTemperatura() {
+            const resultado = document.getElementById("resultado");
+            if (!chuveiroLigado) {
+                resultado.textContent = "Ligue o chuveiro antes de verificar a temperatura.";
+                resultado.style.color = "red";
+                return;
+            }
+
+            const temp = parseFloat(document.getElementById("temperatura").value);
+
+            if (isNaN(temp)) {
+                resultado.textContent = "Por favor, insira um número válido.";
+                resultado.style.color = "red";
+                return;
+            }
+
+            if (temp <= 29) {
+                resultado.textContent = "A água está fria.";
+                resultado.style.color = "#1e90ff";
+            } else if (temp <= 39) {
+                resultado.textContent = "A água está morna.";
+                resultado.style.color = "#ffa500";
+            } else {
+                resultado.textContent = "A água está quente.";
+                resultado.style.color = "#ff4500";
+            }
+        }
+    </script>
+
+</body>
+</html>
